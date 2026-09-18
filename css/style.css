@@ -7,7 +7,7 @@ body.modal-open { overflow: hidden !important; }
 
 /* ================== 启动屏与进度条 ================== */
 .intro-screen { 
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100dvh;
     background: #fdfbfb; z-index: 9999; 
     display: flex; justify-content: center; align-items: center; flex-direction: column; 
     transition: opacity 0.8s ease, visibility 0.8s ease; 
@@ -29,7 +29,7 @@ body.modal-open { overflow: hidden !important; }
 
 /* ================== 1. 固定封面 ================== */
 .cover { 
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 10; 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100dvh; z-index: 10; 
     background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('../images/bg.jpg') center/cover; 
     display: flex; justify-content: center; align-items: center; text-align: center; 
     transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); 
