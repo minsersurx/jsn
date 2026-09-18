@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魔王ai复制体</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { overflow: hidden; background: #f4f9ff; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .chat-modal { position: relative; bottom: auto; right: auto; width: 95%; max-width: 850px; height: 92vh; margin: 0 auto; transform: none; display: flex; flex-direction: column; border: 1px solid #e1edfc; }
+        .chat-modal.hidden { opacity: 1; pointer-events: auto; transform: none; } 
+        #chatFab, #chatCloseBtn, #chatNewTabBtn { display: none !important; } 
+        .chat-header { border-radius: 12px 12px 0 0; padding: 18px 25px; }
+        .chat-body { padding: 25px; }
+    </style>
+</head>
+<body>
+
+    <div id="chatModal" class="chat-modal">
+        <div class="chat-header">
+            <span class="chat-title">魔王ai复制体</span>
+            <div class="chat-actions">
+                <button id="contactHuman" title="召唤魔王">
+                    <i class="fas fa-user-shield"></i>
+                </button>
+                <button id="chatExportBtn" title="导出聊天记录">
+                    <i class="fas fa-download"></i><span class="hide-on-mobile"> 导出记录</span>
+                </button>
+            </div>
+        </div>
+        <div id="chatBody" class="chat-body"></div>
+        <div class="chat-footer">
+            <textarea id="chatInput" placeholder="输入你想说的话... (Enter 发送)"></textarea>
+            <button id="chatSendBtn">发送</button>
+        </div>
+    </div>
+<div id="contactMenu" class="contact-menu-overlay">
+    <div class="contact-card" id="contactCard">
+        <div class="contact-pages-container">
+            
+            <div class="contact-page">
+                <div class="contact-header">召唤魔王 · 联络矩阵</div>
+                <div class="contact-grid">
+                    <a href="mqqapi://card/show_pslcard?src_type=internal&version=1&uin=2700448977&card_type=person&source=qrcode" class="c-item">
+                        <i class="fab fa-qq" style="color:#1296db"></i><span>QQ</span>
+                    </a>
+                    <div class="c-item" onclick="handleWechat()">
+                        <i class="fab fa-weixin" style="color:#07c160"></i><span>微信</span>
+                    </div>
+                    <div class="c-item" onclick="togglePhonePage(true)">
+                        <i class="fas fa-phone-alt" style="color:#4caf50"></i><span>电话</span>
+                    </div>
+                    <a href="/cdn-cgi/l/email-protection#3b565255485e49484e49437b5c565a525715585456" class="c-item">
+                        <i class="fas fa-envelope" style="color:#f44336"></i><span>邮件</span>
+                    </a>
+                    <a href="https://wa.me/447955851786" target="_blank" class="c-item">
+                        <i class="fab fa-whatsapp" style="color:#25d366"></i><span>WhatsApp</span>
+                    </a>
+                    <a href="https://t.me/genyuu0817" target="_blank" class="c-item">
+                        <i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span>
+                    </a>
+                    <a href="https://www.facebook.com/share/1RofTqxQ6v/" target="_blank" class="c-item">
+                        <i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span>
+                    </a>
+                    <a href="https://x.com/MinserSurx29711" target="_blank" class="c-item">
+                        <i class="fab fa-x-twitter" style="color:#000000"></i><span>X</span>
+                    </a>
+                    <a href="https://www.instagram.com/你的账号" target="_blank" class="c-item">
+                        <i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram</span>
+                    </a>
+                </div>
+                <button class="close-contact" id="closeContact" style="width:100%; background:#f8fafc; border:1px solid #f1f5f9; padding:12px; border-radius:15px; margin-top:25px; cursor:pointer; color:#64748b; font-weight:600;">返回</button>
+            </div>
+
+            <div class="contact-page">
+                <div class="contact-header">拨打电话</div>
+                <div class="phone-list-container">
+                    <a href="tel:+8613508097694" class="phone-item">
+                        <span>🇨🇳 中国 (+86)</span><i class="fas fa-phone-alt"></i>
+                    </a>
+                    <a href="tel:+447955851786" class="phone-item">
+                        <span>🇬🇧 英国 (+44)</span><i class="fas fa-phone-alt"></i>
+                    </a>
+                </div>
+                <button class="back-btn" onclick="togglePhonePage(false)">
+                    <i class="fas fa-arrow-left"></i> 返回联络矩阵
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/chat.js"></script>
+    <script> window.onload = renderChat; </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="color-scheme" content="light">
+	<title>网页标题</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+	<link rel="stylesheet" href="css/style.css?v=4.0">
+</head>
+<body>
+
+	<div id="introScreen" class="intro-screen">
+		<div class="progress-wrapper">
+			<div class="progress-container">
+				<div class="progress-bar" id="progressBar"></div>
+			</div>
+			<div class="progress-text" id="progressText">0%</div>
+		</div>
+		
+		<div id="birthdayMessage" class="birthday-message">
+			<div class="bday-zh">生日快乐🎂</div>
+			<div class="bday-en">Happy Birthday</div>
+		</div>
+	</div>
+
+	<section class="cover" id="cover">
+		<div class="cover-content">
+			<h1>封面大标题</h1>
+			<p>副标题 1 · 副标题 2 · 副标题 3</p>
+		</div>
+		<div class="scroll-arrow" id="scrollArrow"></div>
+	</section>
+
+	<section class="birthday-letter-section" id="birthdayLetter">
+		<div class="letter-paper reveal">
+			<h2 class="letter-title">信件标题</h2>
+			<p>这里是你的长篇信件内容。</p>
+			<div class="letter-signature">—— 署名</div>
+		</div>
+	</section>
+
+	<section class="timeline-section" id="timeline">
+		<h2 class="reveal">时间轴大标题</h2>
+		<div class="timeline">
+			
+			<div class="timeline-item">
+				<div class="timeline-date">2023.01.01</div>
+				<a href="#" class="timeline-content">
+					<strong>第一个纪念日</strong><br>
+					填回你的内容填回你的内容填回你的内容填回你的内容。
+				</a>
+			</div>
+			
+			<div class="timeline-item">
+				<div class="timeline-date">2023.06.01</div>
+				<a href="#" class="timeline-content">
+					<strong>第二个纪念日</strong><br>
+					填回你的内容填回你的内容填回你的内容填回你的内容。
+				</a>
+			</div>
+
+			<div class="timeline-item">
+				<div class="timeline-date">2024.01.01</div>
+				<a href="#" class="timeline-content">
+					<strong>新的开始</strong><br>
+					填回你的内容填回你的内容填回你的内容填回你的内容。
+				</a>
+			</div>
+
+		</div>
+	</section>
+
+	<section class="photo-wall-section" id="photoWall">
+		<h2 class="reveal">照片墙大标题</h2>
+		<div class="photo-container">
+			
+			<div class="photo-item" style="--r: -2deg; --x: -4px; --y: 3px;">
+				<img src="images/photo1.jpg" alt="图片 1">
+				<div class="photo-caption">照片说明 1</div>
+				<p class="expanded-story">你的照片故事1你的照片故事1你的照片故事1。</p>
+			</div>
+			
+			<div class="photo-item" style="--r: 3deg; --x: 2px; --y: -1px;">
+				<img src="images/photo2.jpg" alt="图片 2">
+				<div class="photo-caption">照片说明 2</div>
+				<p class="expanded-story">你的照片故事2你的照片故事2你的照片故事2。</p>
+			</div>
+
+			<div class="photo-item" style="--r: -1deg; --x: -2px; --y: 5px;">
+				<img src="images/photo3.jpg" alt="图片 3">
+				<div class="photo-caption">照片说明 3</div>
+				<p class="expanded-story">你的照片故事3你的照片故事3你的照片故事3。</p>
+			</div>
+
+			<div class="photo-item" style="--r: 2deg; --x: 3px; --y: 1px;">
+				<img src="images/photo4.jpg" alt="图片 4">
+				<div class="photo-caption">照片说明 4</div>
+				<p class="expanded-story">你的照片故事4你的照片故事4你的照片故事4。</p>
+			</div>
+
+		</div>
+	</section>
+
+	<div id="photoModal" class="photo-modal">
+		<div class="photo-modal-bg"></div>
+		<div class="photo-modal-content">
+			<img src="" id="modalImg" alt="大图">
+			<p id="modalStory"></p>
+		</div>
+	</div>
+
+	<footer class="main-footer">
+		<p>“页脚寄语。永远期待下一个明天。”</p>
+	</footer>
+
+	<div id="chatOverlay" class="chat-overlay"></div>
+	<button id="chatFab" class="chat-fab">
+		<i class="fas fa-comment-dots"></i><span class="hide-on-mobile"> 聊聊天</span>
+	</button>
+
+	<div id="chatModal" class="chat-modal hidden">
+        <div class="chat-header">
+            <span class="chat-title">魔王ai复制体</span>
+            <div class="chat-actions">
+                <button id="contactHuman" title="召唤魔王">
+                    <i class="fas fa-user-shield"></i>
+                </button>
+                <button id="chatExportBtn" title="导出记录"><i class="fas fa-download"></i></button>
+                <button id="chatNewTabBtn" title="全屏对话"><i class="fas fa-external-link-alt"></i></button>
+            </div>
+        </div>
+
+		<div id="chatBody" class="chat-body"></div>
+		<div class="chat-footer">
+			<textarea id="chatInput" placeholder="输入你想说的话..."></textarea>
+			<button id="chatSendBtn">发送</button>
+		</div>
+	</div>
+
+<div id="contactMenu" class="contact-menu-overlay">
+    <div class="contact-card" id="contactCard">
+        <div class="contact-pages-container">
+            
+            <div class="contact-page">
+                <div class="contact-header">召唤魔王 · 联络矩阵</div>
+                <div class="contact-grid">
+                    <a href="mqqapi://card/show_pslcard?src_type=internal&version=1&uin=2700448977&card_type=person&source=qrcode" class="c-item">
+                        <i class="fab fa-qq" style="color:#1296db"></i><span>QQ</span>
+                    </a>
+                    <div class="c-item" onclick="handleWechat()">
+                        <i class="fab fa-weixin" style="color:#07c160"></i><span>微信</span>
+                    </div>
+                    <div class="c-item" onclick="togglePhonePage(true)">
+                        <i class="fas fa-phone-alt" style="color:#4caf50"></i><span>电话</span>
+                    </div>
+                    <a href="/cdn-cgi/l/email-protection#acc1c5c2dfc9dedfd9ded4eccbc1cdc5c082cfc3c1" class="c-item">
+                        <i class="fas fa-envelope" style="color:#f44336"></i><span>邮件</span>
+                    </a>
+                    <a href="https://wa.me/447955851786" target="_blank" class="c-item">
+                        <i class="fab fa-whatsapp" style="color:#25d366"></i><span>WhatsApp</span>
+                    </a>
+                    <a href="https://t.me/genyuu0817" target="_blank" class="c-item">
+                        <i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span>
+                    </a>
+                    <a href="https://www.facebook.com/share/1RofTqxQ6v/" target="_blank" class="c-item">
+                        <i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span>
+                    </a>
+                    <a href="https://x.com/MinserSurx29711" target="_blank" class="c-item">
+                        <i class="fab fa-x-twitter" style="color:#000000"></i><span>X</span>
+                    </a>
+                    <a href="https://www.instagram.com/你的账号" target="_blank" class="c-item">
+                        <i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram</span>
+                    </a>
+                </div>
+                <button class="close-contact" id="closeContact" style="width:100%; background:#f8fafc; border:1px solid #f1f5f9; padding:12px; border-radius:15px; margin-top:25px; cursor:pointer; color:#64748b; font-weight:600;">返回</button>
+            </div>
+
+            <div class="contact-page">
+                <div class="contact-header">拨打电话</div>
+                <div class="phone-list-container">
+                    <a href="tel:+8613508097694" class="phone-item">
+                        <span>🇨🇳 中国 (+86)</span><i class="fas fa-phone-alt"></i>
+                    </a>
+                    <a href="tel:+447955851786" class="phone-item">
+                        <span>🇬🇧 英国 (+44)</span><i class="fas fa-phone-alt"></i>
+                    </a>
+                </div>
+                <button class="back-btn" onclick="togglePhonePage(false)">
+                    <i class="fas fa-arrow-left"></i> 返回联络矩阵
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+	<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/script.js?v=4.0"></script>
+	<script src="js/chat.js?v=4.0"></script>
+</body>
+</html>
