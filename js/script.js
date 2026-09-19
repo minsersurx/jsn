@@ -1,3 +1,38 @@
+// ================== 0. 夜间模式：跟随系统 + 手动切换 ==================
+(function () {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+    const themeColorMeta = document.getElementById('themeColorMeta');
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function isDarkNow() {
+        const stored = localStorage.getItem('theme');
+        return stored ? stored === 'dark' : media.matches;
+    }
+
+    function syncUI() {
+        const dark = isDarkNow();
+        const icon = toggleBtn ? toggleBtn.querySelector('i') : null;
+        if (icon) icon.className = dark ? 'fas fa-sun' : 'fas fa-moon';
+        if (themeColorMeta) themeColorMeta.setAttribute('content', dark ? '#14171c' : '#fdfbfb');
+    }
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const next = isDarkNow() ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            syncUI();
+        });
+    }
+
+    media.addEventListener('change', () => {
+        if (!localStorage.getItem('theme')) syncUI();
+    });
+
+    syncUI();
+})();
+
 // ================== 1. 启动屏进度条与礼花同步逻辑 ==================
 window.addEventListener('load', () => {
     const intro = document.getElementById('introScreen');
