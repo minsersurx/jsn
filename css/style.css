@@ -1,4 +1,4 @@
-/* ================== 主题变量（亮色 / 暗色） ================== */
+    /* ================== 主题变量（亮色 / 暗色） ================== */
 :root {
     color-scheme: light;
     --bg-main: #fdfbfb;
@@ -108,7 +108,7 @@ body.modal-open { overflow: hidden !important; }
 /* ================== 启动屏与进度条 ================== */
 .intro-screen { 
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100lvh;
-    background: var(--bg-main); z-index: 9999; 
+    background: var(--bg-main); z-index: 9999; opacity: 0.999;
     transition: opacity 0.8s ease, visibility 0.8s ease, background-color 0.3s ease; 
 }
 .intro-screen.hidden { opacity: 0; visibility: hidden; }
@@ -133,7 +133,7 @@ body.modal-open { overflow: hidden !important; }
 
 /* ================== 1. 固定封面 ================== */
 .cover { 
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100lvh; z-index: 10; 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100lvh; z-index: 10; opacity: 0.999;
     background: linear-gradient(var(--cover-overlay), var(--cover-overlay)), url('../images/bg.jpg') center/cover; 
     transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); 
 }
@@ -229,7 +229,7 @@ body.modal-open { overflow: hidden !important; }
 /* ================== 7. AI 助手遮罩与弹窗 ================== */
 .chat-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 95; background: transparent; display: none; touch-action: none; }
 .chat-overlay.active { display: block; }
-.chat-fab { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom)); right: calc(30px + env(safe-area-inset-right)); background: linear-gradient(135deg, var(--accent-light), var(--accent)); color: #fff; border: none; border-radius: 30px; padding: 12px 25px; cursor: pointer; z-index: 9; box-shadow: 0 5px 20px rgba(74,140,219,0.4); transition: 0.3s; font-size: 1.1rem; animation: fabPulse 2.6s infinite; }
+.chat-fab { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom)); right: calc(30px + env(safe-area-inset-right)); background: linear-gradient(135deg, var(--accent-light), var(--accent)); color: #fff; border: none; border-radius: 30px; padding: 12px 25px; cursor: pointer; z-index: 9; opacity: 0.999; box-shadow: 0 5px 20px rgba(74,140,219,0.4); transition: 0.3s; font-size: 1.1rem; animation: fabPulse 2.6s infinite; }
 .chat-fab:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(74,140,219,0.5); animation-play-state: paused; }
 @keyframes fabPulse { 0%, 100% { box-shadow: 0 5px 20px rgba(74,140,219,0.4); } 50% { box-shadow: 0 5px 26px rgba(74,140,219,0.65), 0 0 0 8px rgba(74,140,219,0.12); } }
 .chat-modal { position: fixed; bottom: 90px; right: 30px; width: 340px; height: 500px; background: var(--card-bg); border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); display: flex; flex-direction: column; z-index: 100; transition: 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); transform-origin: bottom right; }
