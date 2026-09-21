@@ -2,48 +2,27 @@
 <html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-	<meta name="theme-color" content="#fdfbfb" id="themeColorMeta">
-	<meta name="color-scheme" content="light dark">
-	<script>
-	(function () {
-		try {
-			var stored = localStorage.getItem('theme');
-			var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-			var isDark = stored ? stored === 'dark' : systemDark;
-			if (stored === 'light' || stored === 'dark') {
-				document.documentElement.setAttribute('data-theme', stored);
-			}
-			var meta = document.getElementById('themeColorMeta');
-			if (meta) meta.setAttribute('content', isDark ? '#14171c' : '#fdfbfb');
-		} catch (e) {}
-	})();
-	</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="color-scheme" content="light">
 	<title>网页标题</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-	<link rel="stylesheet" href="css/style.css?v=5.0">
+	<link rel="stylesheet" href="css/style.css?v=4.0">
 </head>
 <body>
 
-	<button id="themeToggle" class="theme-toggle" aria-label="切换夜间模式">
-		<i class="fas fa-moon"></i>
-	</button>
-
 	<div id="introScreen" class="intro-screen">
-		<div class="intro-inner">
-			<div class="progress-wrapper">
-				<div class="progress-container">
-					<div class="progress-bar" id="progressBar"></div>
-				</div>
-				<div class="progress-text" id="progressText">0%</div>
+		<div class="progress-wrapper">
+			<div class="progress-container">
+				<div class="progress-bar" id="progressBar"></div>
 			</div>
-			
-			<div id="birthdayMessage" class="birthday-message">
-				<div class="bday-zh">生日快乐🎂</div>
-				<div class="bday-en">Happy Birthday</div>
-			</div>
+			<div class="progress-text" id="progressText">0%</div>
+		</div>
+		
+		<div id="birthdayMessage" class="birthday-message">
+			<div class="bday-zh">生日快乐🎂</div>
+			<div class="bday-en">Happy Birthday</div>
 		</div>
 	</div>
 
@@ -133,7 +112,7 @@
 		</div>
 	</div>
 
-	<footer class="main-footer">
+	<footer class="main-footer reveal">
 		<p>“页脚寄语。永远期待下一个明天。”</p>
 	</footer>
 
@@ -219,7 +198,7 @@
 </div>
 
 
-	<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/script.js?v=5.0"></script>
-	<script src="js/chat.js?v=5.0"></script>
+	<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/script.js?v=4.0"></script>
+	<script src="js/chat.js?v=4.0"></script>
 </body>
 </html>
