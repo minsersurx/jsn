@@ -1,4 +1,4 @@
-const API_URL = 'https://deepseek.minsersurx.workers.dev'; 
+const API_URL = 'ds.genyuu.com'; 
 
 const chatFab = document.getElementById('chatFab');
 const chatModal = document.getElementById('chatModal');
