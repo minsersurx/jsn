@@ -193,9 +193,5 @@ document.addEventListener('click', (e) => spawnClickHeart(e.clientX, e.clientY))
 
         menu.onclick = (e) => { if (e.target === menu) closeMenu(); };
 
-        // 微信：直接拉起 App（微信不开放"直接加指定好友"的跳转，卡片上已经展示了号码方便手动搜索）
-        window.handleWechat = function() {
-            window.location.href = 'weixin://';
-        };
     }
 })();
