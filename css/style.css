@@ -1,4 +1,4 @@
-    /* ================== 全局重置与基础设置 ================== */
+/* ================== 全局重置与基础设置 ================== */
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 a { outline: none; text-decoration: none; color: inherit; }
 body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; overflow: hidden; background-color: #fdfbfb; }
@@ -157,41 +157,15 @@ body.modal-open { overflow: hidden !important; }
 /* ================== 6. 居中页脚 ================== */
 .main-footer { background-color: #fdfbfb; text-align: center; padding: 60px 20px 80px; color: #999; font-size: 0.95rem; letter-spacing: 2px; }
 
-/* ================== 7. AI 助手遮罩与弹窗 ================== */
-.chat-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 95; background: transparent; display: none; touch-action: none; }
-.chat-overlay.active { display: block; }
-.chat-fab { position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, #6aa5e3, #4a8cdb); color: #fff; border: none; border-radius: 30px; padding: 12px 25px; cursor: pointer; z-index: 9; box-shadow: 0 5px 20px rgba(74,140,219,0.4); transition: 0.3s; font-size: 1.1rem; animation: fabPulse 2.6s infinite; }
-.chat-fab:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(74,140,219,0.5); animation-play-state: paused; }
-.chat-fab:active { transform: scale(0.94); }
+/* ================== 7. 加好友悬浮按钮 ================== */
+.friend-fab { position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, #6aa5e3, #4a8cdb); color: #fff; border: none; border-radius: 30px; padding: 12px 25px; cursor: pointer; z-index: 9; box-shadow: 0 5px 20px rgba(74,140,219,0.4); transition: 0.3s; font-size: 1.1rem; animation: fabPulse 2.6s infinite; }
+.friend-fab:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(74,140,219,0.5); animation-play-state: paused; }
+.friend-fab:active { transform: scale(0.94); }
 @keyframes fabPulse { 0%, 100% { box-shadow: 0 5px 20px rgba(74,140,219,0.4); } 50% { box-shadow: 0 5px 26px rgba(74,140,219,0.65), 0 0 0 8px rgba(74,140,219,0.12); } }
-.chat-modal { position: fixed; bottom: 90px; right: 30px; width: 340px; height: 500px; background: #fff; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); display: flex; flex-direction: column; z-index: 100; transition: 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); transform-origin: bottom right; }
-.chat-modal.hidden { opacity: 0; transform: scale(0.5); pointer-events: none; }
-.chat-header { background: linear-gradient(135deg, #6aa5e3, #4a8cdb); color: #fff; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 15px 15px 0 0; }
-.chat-title { font-weight: bold; }
-.chat-actions { display: flex; gap: 8px; align-items: center; }
-.chat-actions button { background: rgba(255, 255, 255, 0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: background 0.2s; -webkit-appearance: none; appearance: none; outline: none; }
-.chat-actions button:hover { background: rgba(255, 255, 255, 0.35); }
-.chat-body { flex: 1; padding: 15px; background: #fdfbfb; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; overscroll-behavior: contain; }
-.chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 15px; font-size: 0.92rem; line-height: 1.5; word-wrap: break-word; }
-.msg-user { align-self: flex-end; background: #e1edfc; color: #333; border-bottom-right-radius: 2px; }
-.msg-ai { align-self: flex-start; background: #fff; color: #444; border: 1px solid #eee; border-bottom-left-radius: 2px; }
-.chat-footer { padding: 12px; display: flex; gap: 10px; background: #fff; border-top: 1px solid #eee; }
-.chat-footer textarea { flex: 1; height: 40px; border-radius: 20px; padding: 10px 15px; border: 1px solid #ddd; resize: none; outline: none; font-family: inherit; }
-.chat-footer button { background: linear-gradient(135deg, #6aa5e3, #4a8cdb); color: #fff; border: none; border-radius: 20px; padding: 0 20px; cursor: pointer; -webkit-appearance: none; appearance: none; transition: 0.25s; }
-.chat-footer button:hover { filter: brightness(1.08); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74,140,219,0.4); }
-.chat-footer button:active { transform: scale(0.95); }
-
-.chat-msg p { margin-bottom: 8px; }
-.chat-msg p:last-child { margin-bottom: 0; }
-.chat-msg strong { font-weight: bold; }
-.chat-msg ul, .chat-msg ol { padding-left: 18px; }
-.chat-msg pre { background-color: #f1f5f9; padding: 10px; border-radius: 6px; overflow-x: auto; margin: 8px 0; }
-.chat-msg code { font-family: Consolas, Monaco, monospace; background-color: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
 
 @media (max-width: 600px) {
     .hide-on-mobile { display: none; }
-    .chat-fab { width: 55px; height: 55px; border-radius: 50%; padding: 0; display: flex; justify-content: center; align-items: center; }
-    .chat-actions button { width: 32px !important; height: 32px !important; }
+    .friend-fab { width: 55px; height: 55px; border-radius: 50%; padding: 0; display: flex; justify-content: center; align-items: center; }
 }
 
 /* ================== 8.联络矩阵：高级九宫格与平滑切页 ================== */
