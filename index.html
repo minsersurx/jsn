@@ -111,9 +111,10 @@
 		</div>
 	</div>
 
-	<footer class="main-footer reveal">
-		<p>“页脚寄语。永远期待下一个明天。”</p>
-	</footer>
+		<footer class="main-footer reveal">
+			<p>“页脚寄语。永远期待下一个明天。”</p>
+			<a class="editor-link" href="editor.html"><i class="fas fa-pen-to-square"></i> 编辑网页内容</a>
+		</footer>
 
 	<button id="friendFab" class="friend-fab">
 		<i class="fas fa-user-plus"></i><span class="hide-on-mobile"> 加好友</span>
@@ -126,32 +127,32 @@
             <div class="contact-page">
                 <div class="contact-header">召唤魔王 · 联络矩阵</div>
                 <div class="contact-grid">
-                    <a href="mqqapi://card/show_pslcard?src_type=internal&version=1&uin=2700448977&card_type=person&source=qrcode" class="c-item">
+                    <a data-contact="qq" href="mqqapi://card/show_pslcard?src_type=internal&version=1&uin=2700448977&card_type=person&source=qrcode" class="c-item">
                         <i class="fab fa-qq" style="color:#1296db"></i><span>QQ</span>
                     </a>
                     <div class="c-item" onclick="togglePhonePage(true)">
                         <i class="fas fa-phone-alt" style="color:#4caf50"></i><span>电话</span>
                     </div>
-                    <a href="/cdn-cgi/l/email-protection#acc1c5c2dfc9dedfd9ded4eccbc1cdc5c082cfc3c1" class="c-item">
+                    <a data-contact="email" href="/cdn-cgi/l/email-protection#acc1c5c2dfc9dedfd9ded4eccbc1cdc5c082cfc3c1" class="c-item">
                         <i class="fas fa-envelope" style="color:#f44336"></i><span>邮件</span>
                     </a>
-                    <a href="https://wa.me/85266606054" target="_blank" class="c-item">
-                        <i class="fab fa-whatsapp" style="color:#25d366"></i><span>WhatsApp<br>+852 66606054</span>
+                    <a data-contact="whatsapp" href="https://wa.me/85266606054" target="_blank" class="c-item">
+                        <i class="fab fa-whatsapp" style="color:#25d366"></i><span>WhatsApp</span>
                     </a>
-                    <a href="https://t.me/genyuu0817" target="_blank" class="c-item">
+                    <a data-contact="telegram" href="https://t.me/genyuu0817" target="_blank" class="c-item">
                         <i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span>
                     </a>
-                    <a href="https://www.facebook.com/share/1RofTqxQ6v/" target="_blank" class="c-item">
+                    <a data-contact="facebook" href="https://www.facebook.com/share/1RofTqxQ6v/" target="_blank" class="c-item">
                         <i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span>
                     </a>
-                    <a href="https://x.com/yuusea0817" target="_blank" class="c-item">
-                        <i class="fab fa-x-twitter" style="color:#000000"></i><span>X<br>yuusea0817</span>
+                    <a data-contact="x" href="https://x.com/yuusea0817" target="_blank" class="c-item">
+                        <img class="social-icon x-icon" src="images/x-twitter.svg" alt="X 图标"><span>X</span>
                     </a>
-                    <a href="https://www.instagram.com/wolflingvolant" target="_blank" class="c-item">
-                        <i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram<br>wolflingvolant</span>
+                    <a data-contact="instagram" href="https://www.instagram.com/wolflingvolant" target="_blank" class="c-item">
+                        <i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram</span>
                     </a>
-                    <a href="https://www.douyin.com/user/75406790697" target="_blank" class="c-item">
-                        <i class="fab fa-tiktok" style="color:#111111"></i><span>抖音<br>75406790697</span>
+                    <a data-contact="douyin" href="https://www.douyin.com/user/75406790697" target="_blank" class="c-item">
+                        <i class="fab fa-tiktok" style="color:#111111"></i><span>抖音</span>
                     </a>
                 </div>
                 <button class="close-contact" id="closeContact" style="width:100%; background:#f8fafc; border:1px solid #f1f5f9; padding:12px; border-radius:15px; margin-top:25px; cursor:pointer; color:#64748b; font-weight:600;">返回</button>
@@ -160,13 +161,13 @@
             <div class="contact-page">
                 <div class="contact-header">拨打电话</div>
                 <div class="phone-list-container">
-                    <a href="tel:+8613508097694" class="phone-item">
+                    <a data-phone="china" href="tel:+8613508097694" class="phone-item">
                         <span>🇨🇳 中国 (+86)</span><i class="fas fa-phone-alt"></i>
                     </a>
-                    <a href="tel:+447955851786" class="phone-item">
+                    <a data-phone="uk" href="tel:+447955851786" class="phone-item">
                         <span>🇬🇧 英国 (+44)</span><i class="fas fa-phone-alt"></i>
                     </a>
-                    <a href="tel:+85266606054" class="phone-item">
+                    <a data-phone="hk" href="tel:+85266606054" class="phone-item">
                         <span>🇭🇰 香港 (+852) · 66606054</span><i class="fas fa-phone-alt"></i>
                     </a>
                 </div>
