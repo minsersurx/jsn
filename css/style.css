@@ -248,3 +248,36 @@ body.modal-open { overflow: hidden !important; }
 .x-icon { color: #000; }
 .editor-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 20px; padding: 10px 16px; border: 1px solid #c9def6; border-radius: 999px; color: #4a8cdb; background: rgba(255,255,255,0.75); font-size: 0.9rem; letter-spacing: 0; transition: 0.25s ease; }
 .editor-link:hover { color: #fff; background: #4a8cdb; transform: translateY(-2px); }
+
+
+/* ================== 9. 当前页面内容编辑弹窗 ================== */
+.content-editor-overlay { position: fixed; inset: 0; z-index: 100000; display: none; padding: 18px; background: rgba(15,23,42,.68); backdrop-filter: blur(10px); overflow-y: auto; }
+.content-editor-overlay.active { display: block; }
+.content-editor-card { width: min(1080px, 100%); margin: 0 auto; padding: 24px; border-radius: 20px; background: linear-gradient(135deg, #eef6ff, #fffafc); color: #26364a; box-shadow: 0 25px 70px rgba(0,0,0,.35); }
+.content-editor-topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 12px; }
+.content-editor-topbar h2 { margin: 0 0 6px; color: #4a8cdb; font-size: 1.6rem; }
+.content-editor-topbar p { margin: 0; color: #718096; line-height: 1.6; }
+.editor-close { width: 42px; height: 42px; flex: 0 0 auto; border: 0; border-radius: 50%; color: #64748b; background: #fff; cursor: pointer; font-size: 1.1rem; }
+.editor-close:hover { color: #fff; background: #4a8cdb; }
+.content-editor-card .form-card { margin: 18px 0; padding: 24px; border: 1px solid #dceafb; border-radius: 20px; background: rgba(255,255,255,.9); box-shadow: 0 10px 30px rgba(74,140,219,.08); }
+.content-editor-card h2 { margin: 0 0 18px; color: #4a8cdb; font-size: 1.25rem; }
+.content-editor-card h2 i { width: 1.4em; }
+.content-editor-card label { display: block; margin: 12px 0; color: #52657d; font-size: .92rem; font-weight: 600; }
+.content-editor-card input, .content-editor-card textarea { display: block; width: 100%; margin-top: 7px; padding: 11px 13px; border: 1px solid #cfdeef; border-radius: 10px; background: #fbfdff; color: #23344a; font: inherit; font-weight: 400; outline: none; }
+.content-editor-card textarea { min-height: 82px; resize: vertical; line-height: 1.6; }
+.content-editor-card input:focus, .content-editor-card textarea:focus { border-color: #4a8cdb; box-shadow: 0 0 0 3px rgba(74,140,219,.14); }
+.content-editor-card .repeat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.content-editor-card fieldset { min-width: 0; margin: 0; padding: 14px; border: 1px solid #e0eaf5; border-radius: 14px; background: #f4f9ff; }
+.content-editor-card legend { padding: 0 7px; color: #4a8cdb; font-weight: 700; }
+.content-editor-card .contact-form-grid { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 18px; }
+.content-editor-card .hint { margin: -8px 0 14px; color: #718096; font-size: .88rem; line-height: 1.6; }
+.content-editor-card code { padding: 2px 5px; border-radius: 5px; background: #edf4fc; }
+.content-editor-card .editor-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.content-editor-card .editor-actions button { border: 0; border-radius: 999px; padding: 12px 18px; cursor: pointer; font: inherit; }
+.content-editor-card .primary { color: #fff; background: linear-gradient(135deg, #6aa5e3, #4a8cdb); box-shadow: 0 7px 18px rgba(74,140,219,.24); }
+.content-editor-card .secondary { color: #366fae; background: #eaf3fd; }
+.content-editor-card .text-button { padding-inline: 5px; color: #718096; background: transparent; }
+#saveStatus { color: #2f855a; font-size: .9rem; }
+body.editor-open { overflow: hidden; }
+.editor-link { border: 0; cursor: pointer; font: inherit; }
+@media (max-width: 760px) { .content-editor-card { padding: 18px; } .content-editor-card .repeat-grid, .content-editor-card .contact-form-grid { grid-template-columns: 1fr; } }

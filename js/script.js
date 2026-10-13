@@ -271,3 +271,67 @@ document.addEventListener('click', (e) => spawnClickHeart(e.clientX, e.clientY))
 
     document.addEventListener('DOMContentLoaded', applySavedContent);
 })();
+
+
+// ================== 9. 当前页面内容编辑器 ==================
+(function() {
+    const STORAGE_KEY = 'jsnSiteContent';
+    const editor = document.getElementById('contentEditor');
+    const form = document.getElementById('contentForm');
+    const status = document.getElementById('saveStatus');
+    if (!editor || !form) return;
+
+    const openEditor = () => {
+        editor.classList.add('active');
+        editor.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('editor-open');
+    };
+    const closeEditor = () => {
+        editor.classList.remove('active');
+        editor.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('editor-open');
+    };
+    document.getElementById('openEditor')?.addEventListener('click', openEditor);
+    document.getElementById('closeEditor')?.addEventListener('click', closeEditor);
+    editor.addEventListener('click', event => { if (event.target === editor) closeEditor(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && editor.classList.contains('active')) closeEditor(); });
+
+    const readForm = () => Object.fromEntries(new FormData(form).entries());
+    const fillForm = data => Object.entries(data || {}).forEach(([key, value]) => {
+        const field = form.elements.namedItem(key);
+        if (field) field.value = value;
+    });
+    const showStatus = message => {
+        status.textContent = message;
+        window.clearTimeout(showStatus.timer);
+        showStatus.timer = window.setTimeout(() => { status.textContent = ''; }, 3500);
+    };
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+        try { fillForm(JSON.parse(saved)); } catch (error) { console.warn('无法读取已保存内容', error); }
+    }
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(readForm(), null, 2));
+        showStatus('已保存到当前浏览器。关闭表单后刷新即可看到更新。');
+    });
+
+    document.getElementById('exportButton')?.addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(readForm(), null, 2)], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'jsn-site-content.json';
+        link.click();
+        URL.revokeObjectURL(url);
+        showStatus('内容文件已导出，请把它发给我上传。');
+    });
+
+    document.getElementById('resetButton')?.addEventListener('click', () => {
+        if (!window.confirm('确定要恢复表单默认内容吗？')) return;
+        localStorage.removeItem(STORAGE_KEY);
+        window.location.reload();
+    });
+})();
