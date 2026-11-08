@@ -220,19 +220,17 @@ body.modal-open { overflow: hidden !important; }
 
 .contact-card {
     background: #ffffff; width: 90%; max-width: 360px; border-radius: 30px;
-    padding: 30px 20px; position: relative; overflow: hidden; /* 必须溢出隐藏以实现切页 */
+    padding: 30px 20px; position: relative; overflow: hidden;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
     transform: scale(0.9) translateY(20px);
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .contact-menu-overlay.active .contact-card { transform: scale(1) translateY(0); }
 
-/* 页面切换容器：左右滑动动画的核心 */
 .contact-pages-container {
-    display: flex; width: 200%; /* 两倍宽度存放两页 */
+    display: flex; width: 200%;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-/* 当处于电话页面时，容器左移 50% */
 .contact-card.show-phone .contact-pages-container { transform: translateX(-50%); }
 
 .contact-page { width: 50%; padding: 0 10px; flex-shrink: 0; }
@@ -242,7 +240,6 @@ body.modal-open { overflow: hidden !important; }
     margin-bottom: 25px; font-size: 1.2rem;
 }
 
-/* 九宫格布局 */
 .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px 15px; }
 
 .c-item {
@@ -251,11 +248,9 @@ body.modal-open { overflow: hidden !important; }
 }
 .c-item:hover { color: #4a8cdb; transform: translateY(-3px); }
 
-/* 图标变大 */
 .c-item i { font-size: 2rem; } 
 .c-item span { font-size: 0.8rem; font-weight: 600; text-align: center; }
 
-/* 电话列表样式 */
 .phone-list-container { display: flex; flex-direction: column; gap: 12px; }
 .phone-item {
     background: #f8fafc; padding: 18px; border-radius: 20px;
@@ -283,31 +278,27 @@ body.modal-open { overflow: hidden !important; }
     100% { opacity: 0; transform: translate(calc(-50% + var(--tx, 0px)), -50%) translateY(-70px) scale(1.3) rotate(20deg); }
 }
 
-
-/* 本地品牌图标 */
 .social-icon { width: 1.35em; height: 1.35em; display: block; object-fit: contain; }
 .x-icon { color: #000; }
 
-/* ================== 信件隐藏括号内容（黑块） ================== */
+/* ================== 信件黑幕（参考萌百 heimu） ================== */
 .spoiler {
-    display: inline-block;
-    margin: 0 2px;
-    padding: 0 4px;
-    border-radius: 3px;
-    color: #111;
-    background: #111;
+    display: inline;
+    background-color: #252525;
+    color: #252525;
+    padding: 0 2px;
+    border-radius: 2px;
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
-    transition: color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+    text-shadow: none;
+    transition: color 0.13s linear;
 }
 .spoiler:hover,
+.spoiler:active,
 .spoiler:focus,
 .spoiler:focus-visible,
-.spoiler:active,
 .spoiler.revealed {
-    color: #555;
-    background: transparent;
+    color: #ffffff;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(74, 140, 219, 0.2);
 }
