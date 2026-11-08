@@ -195,3 +195,20 @@ document.addEventListener('click', (e) => spawnClickHeart(e.clientX, e.clientY))
 
     }
 })();
+
+// ================== 8. 黑块 Spoiler 交互（鼠标悬停 / 手指按住显示，松开恢复） ==================
+document.querySelectorAll('.spoiler').forEach(el => {
+    // 手指按下显示
+    el.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        el.classList.add('revealed');
+    }, { passive: false });
+
+    // 松开恢复黑块
+    const hide = () => el.classList.remove('revealed');
+    el.addEventListener('touchend', hide);
+    el.addEventListener('touchcancel', hide);
+
+    // 防止长按菜单
+    el.addEventListener('contextmenu', (e) => e.preventDefault());
+});
