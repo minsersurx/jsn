@@ -253,13 +253,27 @@ body.modal-open { overflow: hidden !important; }
 
 .phone-list-container { display: flex; flex-direction: column; gap: 12px; }
 .phone-item {
-    background: #f8fafc; padding: 18px; border-radius: 20px;
+    background: #f8fafc; padding: 16px 18px; border-radius: 20px;
     display: flex; justify-content: space-between; align-items: center;
-    text-decoration: none; color: #1e293b; font-weight: 600; transition: 0.2s;
+    color: #1e293b; font-weight: 600;
     border: 1px solid #f1f5f9;
+    cursor: default;
 }
-.phone-item:hover { background: #f1f5f9; border-color: #e2e8f0; }
-.phone-item i { color: #4a8cdb; font-size: 1.2rem; }
+.phone-actions {
+    display: flex; gap: 14px; align-items: center;
+}
+.phone-action {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #fff; border: 1px solid #e2e8f0;
+    color: #4a8cdb; font-size: 1rem;
+    transition: 0.2s; cursor: pointer;
+}
+.phone-action:hover {
+    background: #4a8cdb; color: #fff; border-color: #4a8cdb;
+    transform: scale(1.08);
+}
+.phone-action i { font-size: 1rem; }
 
 .back-btn {
     margin-top: 25px; background: none; border: none; color: #94a3b8;
