@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 	<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&display=swap">
-	<link rel="stylesheet" href="css/style.css?v=5.5">
+	<link rel="stylesheet" href="css/style.css?v=5.6">
 </head>
 <body>
 
@@ -180,17 +180,22 @@
             </div>
 
             <div class="contact-page">
-                <div class="contact-header">拨打电话</div>
+                <div class="contact-header">联系电话</div>
                 <div class="phone-list-container">
-                    <a href="tel:+8613508097694" class="phone-item">
-                        <span>🇨🇳 中国 (+86)</span><i class="fas fa-phone-alt"></i>
-                    </a>
-                    <a href="tel:+447955851786" class="phone-item">
-                        <span>🇬🇧 英国 (+44)</span><i class="fas fa-phone-alt"></i>
-                    </a>
-                    <a href="tel:+85266606054" class="phone-item">
-                        <span>🇭🇰 香港 (+852) · 66606054</span><i class="fas fa-phone-alt"></i>
-                    </a>
+                    <div class="phone-item">
+                        <span>(+86)</span>
+                        <div class="phone-actions">
+                            <a href="tel:+8613508097694" class="phone-action" title="打电话"><i class="fas fa-phone-alt"></i></a>
+                            <a href="sms:+8613508097694" class="phone-action" title="发短信"><i class="fas fa-comment-sms"></i></a>
+                        </div>
+                    </div>
+                    <div class="phone-item">
+                        <span>(+852)</span>
+                        <div class="phone-actions">
+                            <a href="tel:+85266606054" class="phone-action" title="打电话"><i class="fas fa-phone-alt"></i></a>
+                            <a href="sms:+85266606054" class="phone-action" title="发短信"><i class="fas fa-comment-sms"></i></a>
+                        </div>
+                    </div>
                 </div>
                 <button class="back-btn" onclick="togglePhonePage(false)">
                     <i class="fas fa-arrow-left"></i> 返回联络矩阵
@@ -201,6 +206,6 @@
     </div>
 </div>
 
-	<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/script.js?v=5.5"></script>
+	<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/script.js?v=5.6"></script>
 </body>
 </html>
