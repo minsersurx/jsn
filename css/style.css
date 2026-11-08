@@ -77,8 +77,13 @@ body.modal-open { overflow: hidden !important; }
 .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.25,1,0.5,1), transform 0.9s cubic-bezier(0.25,1,0.5,1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+/* ================== 无边框板块（写在前面的话之前） ================== */
+.plain-note-section { padding: 60px 20px 20px; background: transparent; position: relative; z-index: 1; }
+.plain-note { max-width: 700px; margin: 0 auto; padding: 30px 20px; color: #555; line-height: 1.8; text-align: center; }
+.plain-note p { margin: 0; }
+
 /* ================== 2. 生日祝贺信区 ================== */
-.birthday-letter-section { padding: 80px 20px 40px; background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%); position: relative; z-index: 1; }
+.birthday-letter-section { padding: 40px 20px 40px; background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%); position: relative; z-index: 1; }
 .birthday-letter-section::before {
     content: ''; position: absolute; top: -60px; left: -60px; width: 320px; height: 320px; border-radius: 50%;
     background: radial-gradient(circle, rgba(106,165,227,0.22), transparent 70%); filter: blur(10px);
@@ -247,7 +252,7 @@ body.modal-open { overflow: hidden !important; }
 .social-icon { width: 1.35em; height: 1.35em; display: block; object-fit: contain; }
 .x-icon { color: #000; }
 
-/* ================== 信件隐藏括号内容 ================== */
+/* ================== 信件隐藏括号内容（黑块） ================== */
 .spoiler {
     display: inline-block;
     margin: 0 2px;
@@ -255,12 +260,16 @@ body.modal-open { overflow: hidden !important; }
     border-radius: 3px;
     color: #111;
     background: #111;
-    cursor: help;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
     transition: color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
 }
 .spoiler:hover,
 .spoiler:focus,
-.spoiler:focus-visible {
+.spoiler:focus-visible,
+.spoiler:active,
+.spoiler.revealed {
     color: #555;
     background: transparent;
     outline: none;
