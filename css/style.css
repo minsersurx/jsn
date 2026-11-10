@@ -84,7 +84,7 @@ body.modal-open { overflow: hidden !important; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ================== 无边框板块（诗歌） ================== */
-.plain-note-section { padding: 80px 20px 40px; background: transparent; position: relative; z-index: 1; }
+.plain-note-section { padding: 40px 20px 30px; background: transparent; position: relative; z-index: 1; }
 .plain-note { max-width: 680px; margin: 0 auto; padding: 20px; color: #444; }
 .poem { 
     text-align: center; 
@@ -104,7 +104,7 @@ body.modal-open { overflow: hidden !important; }
 }
 
 /* ================== 2. 生日祝贺信区 ================== */
-.birthday-letter-section { padding: 30px 20px 40px; background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%); position: relative; z-index: 1; }
+.birthday-letter-section { padding: 20px 20px 40px; background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%); position: relative; z-index: 1; }
 .birthday-letter-section::before {
     content: ''; position: absolute; top: -60px; left: -60px; width: 320px; height: 320px; border-radius: 50%;
     background: radial-gradient(circle, rgba(106,165,227,0.22), transparent 70%); filter: blur(10px);
@@ -139,23 +139,38 @@ body.modal-open { overflow: hidden !important; }
 .timeline-section h2 { text-align: center; margin-bottom: 50px; color: #333; font-size: 2rem; position: relative; padding-bottom: 18px; font-family: 'Noto Serif SC', serif; }
 .timeline-section h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, #6aa5e3, #4a8cdb, #8ec5fc, #6aa5e3); background-size: 300% auto; animation: shine 4s linear infinite; }
 .timeline { max-width: 850px; margin: 0 auto; position: relative; border-left: 3px solid #6aa5e3; padding-left: 40px; }
-.timeline-item { margin-bottom: 50px; position: relative; width: 100%; opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+
+.timeline-year-group { margin-bottom: 40px; }
+.timeline-year {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #4a8cdb;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+    font-family: 'Noto Serif SC', serif;
+}
+
+.timeline-item { margin-bottom: 20px; position: relative; width: 100%; opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
 .timeline-item.visible { opacity: 1; transform: translateY(0); }
-.timeline-item::before { content: ''; position: absolute; width: 16px; height: 16px; background: #6aa5e3; border-radius: 50%; border: 3px solid #fff; left: -49.5px; top: 5px; z-index: 1; animation: dotPulse 2.4s infinite; }
+.timeline-item::before { content: ''; position: absolute; width: 12px; height: 12px; background: #6aa5e3; border-radius: 50%; border: 2px solid #fff; left: -46.5px; top: 12px; z-index: 1; animation: dotPulse 2.4s infinite; }
 @keyframes dotPulse { 0% { box-shadow: 0 0 0 0 rgba(106,165,227,0.5); } 70% { box-shadow: 0 0 0 10px rgba(106,165,227,0); } 100% { box-shadow: 0 0 0 0 rgba(106,165,227,0); } }
-.timeline-date { font-weight: bold; color: #4a8cdb; margin-bottom: 8px; font-size: 1.1rem; }
-.timeline-content { display: block; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.3s; text-decoration: none; color: #555; line-height: 1.6; }
-.timeline-content:hover { transform: translateY(-6px) scale(1.015); box-shadow: 0 12px 28px rgba(74,140,219,0.3); color: #4a8cdb; }
-.timeline-content * { background-color: transparent !important; }
+.timeline-content { display: block; background: #fff; padding: 18px 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); color: #555; line-height: 1.7; }
+.timeline-content .spoiler { background-color: #252525 !important; color: #252525 !important; }
+.timeline-content .spoiler:hover,
+.timeline-content .spoiler:active,
+.timeline-content .spoiler:focus,
+.timeline-content .spoiler.revealed { color: #ffffff !important; }
 
 @media screen and (min-width: 768px) {
     .timeline::after { content: ''; position: absolute; width: 4px; background-color: #6aa5e3; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); border-radius: 2px; }
     .timeline { overflow: hidden; border-left: none; padding-left: 0; }
-    .timeline-item { width: 50%; clear: both; margin-bottom: 120px; }
+    .timeline-year-group { clear: both; margin-bottom: 60px; }
+    .timeline-year { text-align: center; margin-bottom: 24px; }
+    .timeline-item { width: 50%; clear: both; margin-bottom: 30px; }
     .timeline-item:nth-child(odd) { float: left; padding-left: 0; padding-right: 45px; }
-    .timeline-item:nth-child(odd)::before { left: auto; right: -10px; }
-    .timeline-item:nth-child(even) { float: right; padding-left: 45px; padding-right: 0; margin-top: -80px; }
-    .timeline-item:nth-child(even)::before { left: -10px; }
+    .timeline-item:nth-child(odd)::before { left: auto; right: -8px; }
+    .timeline-item:nth-child(even) { float: right; padding-left: 45px; padding-right: 0; }
+    .timeline-item:nth-child(even)::before { left: -8px; }
 }
 
 /* ================== 4. 照片墙区 ================== */
