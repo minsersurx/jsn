@@ -1,0 +1,7 @@
+# Content-fingerprinted media can be cached in browsers for a year.
+/media/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Third-party libraries are pinned by version in their URL.
+/vendor/*
+  Cache-Control: public, max-age=31536000, immutable

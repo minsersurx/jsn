@@ -41,6 +41,7 @@ window.addEventListener('load', () => {
 
 // ================== 2. 五彩礼花爆发函数 (修复被挡住的问题) ==================
 function fireConfetti() {
+    if (typeof window.confetti !== 'function') return;
     const count = 200;
     // 🚀 核心修复：添加 zIndex: 10000，确保礼花在所有东西（包括白屏 9999）的最前面爆发！
     const defaults = { origin: { y: 0.7 }, zIndex: 10000 }; 
@@ -130,12 +131,12 @@ document.querySelectorAll('.timeline-item, .reveal, .photo-item').forEach(el => 
 // ================== 5. 照片弹窗 ==================
 const photoModal = document.getElementById('photoModal');
 const modalImg = document.getElementById('modalImg');
-const modalStory = document.getElementById('modalStory');
 
-document.querySelectorAll('.photo-item').forEach(item => {
-    item.addEventListener('click', () => {
-        modalImg.src = item.querySelector('img').src;
-        modalStory.innerHTML = item.querySelector('.expanded-story').innerHTML;
+document.querySelectorAll('.photo-zoom').forEach(button => {
+    button.addEventListener('click', () => {
+        const image = button.querySelector('img');
+        modalImg.src = image.currentSrc || image.src;
+        modalImg.alt = image.alt;
         void photoModal.offsetWidth;
         photoModal.classList.add('active');
         document.body.classList.add('modal-open');
