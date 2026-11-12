@@ -167,24 +167,23 @@ body.modal-open { position: fixed; top: var(--modal-scroll-top, 0px); left: 0; w
 /* 外壳只参与原版多栏排版，变换放在内层，避免列分片随交互重绘丢失。 */
 .photo-container { max-width: 1080px; margin: 0 auto; column-count: 4; column-gap: 18px; padding: 10px; position: relative; z-index: 1; }
 .photo-item { break-inside: avoid; -webkit-column-break-inside: avoid; display: inline-block; vertical-align: top; width: 100%; margin: 0 0 -8px; position: relative; z-index: 5; cursor: zoom-in; }
-.photo-card { display: block; width: 100%; padding: 10px; background: #fff; box-shadow: 0 8px 22px rgba(0,0,0,0.13); border-radius: 12px; opacity: 1; transform: rotate(var(--r)) translate(var(--x), var(--y)); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; }
+/* 各动画状态保留同一合成层，避免 WebKit 丢失跨列卡片的绘制结果。 */
+.photo-card { display: block; width: 100%; padding: 10px; background: #fff; box-shadow: 0 8px 22px rgba(0,0,0,0.13); border-radius: 12px; opacity: 1; -webkit-backface-visibility: hidden; backface-visibility: hidden; transform: translate3d(0, 0, 0) rotate(var(--r)) translate(var(--x), var(--y)); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; }
 .photo-item:nth-child(2) { --enter-delay: 0.08s; }
 .photo-item:nth-child(3) { --enter-delay: 0.16s; }
 .photo-item:nth-child(4) { --enter-delay: 0.24s; }
 .photo-card.is-entering { animation: photoCardEnter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) var(--enter-delay, 0s) backwards; }
 @keyframes photoCardEnter {
-    from { opacity: 0; transform: scale(0.82) translateY(35px) rotate(var(--r)); }
-    to { opacity: 1; transform: rotate(var(--r)) translate(var(--x), var(--y)); }
+    from { opacity: 0; transform: translate3d(0, 0, 0) scale(0.82) translateY(35px) rotate(var(--r)); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) rotate(var(--r)) translate(var(--x), var(--y)); }
 }
 .photo-item:hover { z-index: 20; }
-.photo-item:hover .photo-card { transform: scale(1.06) rotate(0deg) translate(0, 0) !important; box-shadow: 0 16px 34px rgba(74,140,219,0.3); }
+.photo-item:hover .photo-card { transform: translate3d(0, 0, 0) scale(1.06) rotate(0deg) translate(0, 0) !important; box-shadow: 0 16px 34px rgba(74,140,219,0.3); }
 .photo-zoom { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
 .photo-zoom:focus-visible { outline: 3px solid #4a8cdb; outline-offset: 4px; border-radius: 6px; }
 .photo-item img { display: block; width: 100%; height: auto; max-height: 360px; object-fit: contain; border-radius: 6px; background: #f8f8f8; -webkit-user-drag: none; user-select: none; }
-/* 视频不参与多栏平衡，避免手机端单侧拖出长尾和大片空白。 */
-.photo-video-row { max-width: 1080px; margin: 36px auto 0; padding: 10px; display: flex; justify-content: center; }
-.photo-item-video { display: block; width: min(100%, 280px); margin: 0; cursor: default; }
-.photo-item-video video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: contain; background: #111; border-radius: 7px; }
+.photo-item-video { cursor: default; }
+.photo-item-video video { display: block; width: 100%; height: auto; max-height: 360px; aspect-ratio: 9 / 16; object-fit: contain; background: #111; border-radius: 7px; }
 @media (prefers-reduced-motion: reduce) {
     .photo-card { transition: none; }
     .photo-card.is-entering { animation: none; }
@@ -340,8 +339,7 @@ body.modal-open { position: fixed; top: var(--modal-scroll-top, 0px); left: 0; w
     .photo-container { column-count: 2; column-gap: 12px; padding: 6px; }
     .photo-item { margin-bottom: -6px; }
     .photo-card { padding: 8px; }
-    .photo-item-video { width: min(100%, 240px); margin-bottom: 0; }
-    .photo-item img { max-height: 320px; }
+    .photo-item img, .photo-item-video video { max-height: 320px; }
 }
 @media (min-width: 768px) and (max-width: 980px) {
     .photo-container { column-count: 3; }
