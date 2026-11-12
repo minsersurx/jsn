@@ -120,36 +120,96 @@ window.addEventListener('touchmove', (e) => {
     }
 }, { passive: false });
 
-// ================== 4. 时间轴渐显 ==================
+// ================== 4. 稳定照片列与时间轴渐显 ==================
+// 不使用 CSS multi-column 分片：旋转卡片在部分移动浏览器中会重绘丢失。
+const photoContainer = document.querySelector('.photo-container');
+const photoItems = photoContainer ? Array.from(photoContainer.querySelectorAll('.photo-item')) : [];
+let galleryColumnCount = 0;
+function layoutPhotoColumns() {
+    if (!photoContainer) return;
+    const count = window.matchMedia('(max-width: 767px)').matches ? 2
+        : window.matchMedia('(max-width: 980px)').matches ? 3 : 4;
+    if (count === galleryColumnCount) return;
+    galleryColumnCount = count;
+    const columns = Array.from({ length: count }, () => {
+        const column = document.createElement('div');
+        column.className = 'photo-column';
+        return column;
+    });
+    photoItems.forEach((item, index) => columns[index % count].appendChild(item));
+    photoContainer.replaceChildren(...columns);
+}
+layoutPhotoColumns();
+window.matchMedia('(max-width: 767px)').addEventListener('change', layoutPhotoColumns);
+window.matchMedia('(max-width: 980px)').addEventListener('change', layoutPhotoColumns);
+
+// 照片始终可见；滚动动画只作用于文字，不再依赖观察器显示照片。
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
     });
 }, { threshold: 0.2 });
-document.querySelectorAll('.timeline-item, .reveal, .photo-item').forEach(el => observer.observe(el));
+document.querySelectorAll('.timeline-item, .reveal').forEach(el => observer.observe(el));
 
 // ================== 5. 照片弹窗 ==================
 const photoModal = document.getElementById('photoModal');
 const modalImg = document.getElementById('modalImg');
+const photoCloseButton = document.getElementById('photoModalClose');
+let modalScrollY = 0;
+let modalCloseTimer;
+let modalRequest = 0;
+let activePhotoButton;
 
 document.querySelectorAll('.photo-zoom').forEach(button => {
-    button.addEventListener('click', () => {
+    // 禁止浏览器原生图片拖动，保留正常页面滑动与双指缩放。
+    button.addEventListener('dragstart', event => event.preventDefault());
+    button.addEventListener('click', async () => {
+        const request = ++modalRequest;
         const image = button.querySelector('img');
+        activePhotoButton = button;
         modalImg.src = image.currentSrc || image.src;
         modalImg.alt = image.alt;
-        void photoModal.offsetWidth;
-        photoModal.classList.add('active');
+        // 先解码再显示，避免异步解码阶段出现空白大图。
+        if (typeof modalImg.decode === 'function') {
+            try { await modalImg.decode(); } catch (_) { /* 保留原生加载/错误状态 */ }
+        }
+        if (request !== modalRequest) return;
+        clearTimeout(modalCloseTimer);
+        if (!document.body.classList.contains('modal-open')) {
+            modalScrollY = window.scrollY;
+            document.body.style.setProperty('--modal-body-width', `${document.body.getBoundingClientRect().width}px`);
+        }
+        document.body.style.setProperty('--modal-scroll-top', `-${modalScrollY}px`);
         document.body.classList.add('modal-open');
+        photoModal.classList.add('active');
+        photoModal.setAttribute('aria-hidden', 'false');
+        photoCloseButton.focus({ preventScroll: true });
     });
 });
 
-const bg = document.querySelector('.photo-modal-bg');
-if(bg) {
-    bg.addEventListener('click', () => {
-        photoModal.classList.remove('active');
-        setTimeout(() => document.body.classList.remove('modal-open'), 400);
-    });
+function closePhotoModal() {
+    ++modalRequest;
+    if (!photoModal.classList.contains('active')) return;
+    photoModal.classList.remove('active');
+    photoModal.setAttribute('aria-hidden', 'true');
+    clearTimeout(modalCloseTimer);
+    modalCloseTimer = setTimeout(() => {
+        document.body.classList.remove('modal-open');
+        document.body.style.removeProperty('--modal-scroll-top');
+        document.body.style.removeProperty('--modal-body-width');
+        window.scrollTo(0, modalScrollY);
+        if (activePhotoButton) activePhotoButton.focus({ preventScroll: true });
+    }, 400);
 }
+const bg = document.querySelector('.photo-modal-bg');
+if (bg) bg.addEventListener('click', closePhotoModal);
+if (photoCloseButton) photoCloseButton.addEventListener('click', closePhotoModal);
+document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closePhotoModal();
+});
 
 // ================== 6. 点击爱心/星光特效 ==================
 const CLICK_FX = ['✨', '⭐', '🌟'];

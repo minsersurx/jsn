@@ -1,16 +1,17 @@
 /* ================== 全局重置与基础设置 ================== */
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 a { outline: none; text-decoration: none; color: inherit; }
+html { scrollbar-gutter: stable; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { 
     font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; 
     overflow: hidden; 
     background-color: #fdfbfb; 
 }
 body.unlocked { overflow: auto; }
-body.modal-open { overflow: hidden !important; }
+body.modal-open { position: fixed; top: var(--modal-scroll-top, 0px); left: 0; width: var(--modal-body-width, 100%); overflow: hidden !important; }
 
 /* ================== 启动屏与进度条 ================== */
-.intro-screen { 
+.intro-screen {
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100dvh;
     background: #fdfbfb; z-index: 9999; 
     display: flex; justify-content: center; align-items: center; flex-direction: column; 
@@ -153,11 +154,6 @@ body.modal-open { overflow: hidden !important; }
 .timeline-item-right::before { left: -6px; }
 @keyframes dotPulse { 0% { box-shadow: 0 0 0 0 rgba(106,165,227,0.5); } 70% { box-shadow: 0 0 0 10px rgba(106,165,227,0); } 100% { box-shadow: 0 0 0 0 rgba(106,165,227,0); } }
 .timeline-content { display: block; min-width: 0; overflow-wrap: anywhere; background: #fff; padding: 18px 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); color: #555; line-height: 1.7; }
-.timeline-content .spoiler { background-color: #252525 !important; color: #252525 !important; }
-.timeline-content .spoiler:hover,
-.timeline-content .spoiler:active,
-.timeline-content .spoiler:focus,
-.timeline-content .spoiler.revealed { color: #ffffff !important; }
 
 /* ================== 4. 照片墙区 ================== */
 .photo-wall-section { padding: 80px 20px 100px; background: linear-gradient(180deg, #d6eaff 0%, #fdfbfb 100%); position: relative; z-index: 1; }
@@ -168,27 +164,26 @@ body.modal-open { overflow: hidden !important; }
 }
 .photo-wall-section h2 { text-align: center; margin-bottom: 50px; color: #333; font-size: 2rem; position: relative; padding-bottom: 18px; font-family: 'Noto Serif SC', serif; }
 .photo-wall-section h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, #6aa5e3, #4a8cdb, #8ec5fc, #6aa5e3); background-size: 300% auto; animation: shine 4s linear infinite; }
-.photo-container { max-width: 1080px; margin: 0 auto; column-count: 4; column-gap: 18px; padding: 10px; position: relative; z-index: 1; }
-.photo-item { break-inside: avoid; display: inline-block; width: 100%; margin: 0 0 -8px; padding: 10px; background: #fff; box-shadow: 0 8px 22px rgba(0,0,0,0.13); transform: rotate(var(--r)) translate(var(--x), var(--y)); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; cursor: zoom-in; position: relative; z-index: 5; border-radius: 12px; }
-.photo-item:not(.visible) { opacity: 0; transform: scale(0.82) translateY(35px) rotate(var(--r)); }
-.photo-container .photo-item:nth-child(1) { transition-delay: 0s; }
-.photo-container .photo-item:nth-child(2) { transition-delay: 0.08s; }
-.photo-container .photo-item:nth-child(3) { transition-delay: 0.16s; }
-.photo-container .photo-item:nth-child(4) { transition-delay: 0.24s; }
-.photo-item:hover { transform: scale(1.06) rotate(0deg) translate(0, 0) !important; z-index: 20; box-shadow: 0 16px 34px rgba(74,140,219,0.3); }
+.photo-container { --gallery-columns: 4; max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(var(--gallery-columns), minmax(0, 1fr)); gap: 18px; align-items: start; padding: 10px; position: relative; z-index: 1; isolation: isolate; }
+.photo-column { display: flex; flex-direction: column; min-width: 0; }
+.photo-item { display: block; flex: none; width: 100%; margin: 0 0 -8px; padding: 10px; background: #fff; box-shadow: 0 8px 22px rgba(0,0,0,0.13); opacity: 1; transform: rotate(var(--r)) translate(var(--x), var(--y)); transition: transform 0.25s ease, box-shadow 0.25s ease; cursor: zoom-in; position: relative; z-index: 5; border-radius: 12px; }
+@media (hover: hover) and (pointer: fine) {
+    .photo-item:hover { transform: translateY(-4px) rotate(0deg); z-index: 20; box-shadow: 0 16px 34px rgba(74,140,219,0.3); }
+}
 .photo-zoom { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
-.photo-item img { display: block; width: 100%; height: auto; max-height: 360px; object-fit: contain; border-radius: 6px; background: #f8f8f8; }
+.photo-zoom:focus-visible { outline: 3px solid #4a8cdb; outline-offset: 4px; border-radius: 6px; }
+.photo-item img { display: block; width: 100%; height: auto; max-height: 360px; object-fit: contain; border-radius: 6px; background: #f8f8f8; -webkit-user-drag: none; user-select: none; }
 .photo-item-video { cursor: default; }
 .photo-item-video video { display: block; width: 100%; height: auto; max-height: 360px; aspect-ratio: 9 / 16; object-fit: contain; background: #111; border-radius: 7px; }
 
 /* ================== 5. 照片全局弹窗 ================== */
 .photo-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s; -webkit-transform: translateZ(0); transform: translateZ(0); }
 .photo-modal.active { opacity: 1; visibility: visible; }
-.photo-modal-bg { position: absolute; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); transition: background 0.4s ease, backdrop-filter 0.4s ease, -webkit-backdrop-filter 0.4s ease; cursor: pointer; }
-.photo-modal.active .photo-modal-bg { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.photo-modal-bg { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.72); cursor: pointer; }
 .photo-modal-content { position: relative; background: #fff; width: 92%; max-width: 760px; padding: 14px; border-radius: 18px; z-index: 1; transform: scale(0.8) translateY(20px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 25px 60px rgba(0,0,0,0.4); overflow: auto; max-height: 90vh; overscroll-behavior: contain; }
 .photo-modal.active .photo-modal-content { transform: scale(1) translateY(0); }
 .photo-modal-content img { display: block; width: 100%; max-height: calc(90vh - 28px); object-fit: contain; border-radius: 12px; margin: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.photo-modal-close { position: absolute; top: 18px; right: 18px; z-index: 2; width: 40px; height: 40px; border: 0; border-radius: 50%; background: #fff; color: #333; font-size: 28px; line-height: 1; cursor: pointer; }
 
 /* ================== 6. 居中页脚 ================== */
 .main-footer { background-color: #fdfbfb; text-align: center; padding: 60px 20px 80px; color: #999; font-size: 0.95rem; letter-spacing: 2px; }
@@ -297,9 +292,14 @@ body.modal-open { overflow: hidden !important; }
 /* ================== 信件黑幕（参考萌百 heimu） ================== */
 .spoiler {
     display: inline;
+    font: inherit;
+    line-height: inherit;
     background-color: #252525;
-    color: #252525;
-    padding: 0 2px;
+    color: transparent;
+    -webkit-text-fill-color: currentColor;
+    padding: 0.08em 0.2em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
     border-radius: 2px;
     cursor: pointer;
     user-select: none;
@@ -324,15 +324,15 @@ body.modal-open { overflow: hidden !important; }
     .timeline-item, .timeline-item-left, .timeline-item-right { display: block; width: 100%; padding: 0; margin: 0 0 18px; }
     .timeline-item::before, .timeline-item-left::before, .timeline-item-right::before { left: -34px; right: auto; top: 18px; }
     .timeline-content { padding: 16px; }
-    .photo-container { column-count: 2; column-gap: 12px; padding: 6px; }
+    .photo-container { --gallery-columns: 2; gap: 12px; padding: 6px; }
     .photo-item { padding: 8px; margin-bottom: -6px; }
     .photo-item img, .photo-item-video video { max-height: 320px; }
 }
 @media (min-width: 768px) and (max-width: 980px) {
-    .photo-container { column-count: 3; }
+    .photo-container { --gallery-columns: 3; }
 }
 @media (max-width: 360px) {
-    .photo-container { column-gap: 8px; }
+    .photo-container { gap: 8px; }
     .photo-item { padding: 6px; }
     .timeline { padding-left: 32px; }
     .timeline-item::before, .timeline-item-left::before, .timeline-item-right::before { left: -30px; }
