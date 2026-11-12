@@ -1,0 +1,69 @@
+/* Background cake layer: deliberately isolated from content, cards, photos and controls. */
+/* The footer is the only target host that was static in the existing stylesheet. */
+.main-footer {
+    position: relative;
+}
+
+.cake-field {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+    contain: paint;
+}
+
+/* Explicit content layers only; no global rule touches the cover or controls. */
+.plain-note,
+.letter-paper,
+.timeline-section > h2,
+.timeline,
+.photo-wall-section > h2,
+.main-footer > :not(.cake-field) {
+    position: relative;
+    z-index: 1;
+}
+
+.cake-field .background-cake {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 1em;
+    height: 1em;
+    margin: 0;
+    color: inherit;
+    font-size: var(--cake-size, 20px);
+    line-height: 1;
+    opacity: var(--cake-opacity, 0.22);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    will-change: transform, opacity;
+    transform: translate3d(var(--cake-x, 0px), var(--cake-y, 0px), 0);
+    animation: background-cake-fall var(--cake-duration, 11s) linear forwards;
+}
+
+@keyframes background-cake-fall {
+    0% {
+        opacity: 0;
+        transform: translate3d(var(--cake-x, 0px), var(--cake-y, 0px), 0) rotate(var(--cake-rotate, -6deg));
+    }
+    10% {
+        opacity: var(--cake-opacity, 0.22);
+    }
+    88% {
+        opacity: var(--cake-opacity, 0.22);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(calc(var(--cake-x, 0px) + var(--cake-drift, 18px)), calc(var(--cake-y, 0px) + var(--cake-distance, 420px)), 0) rotate(var(--cake-end-rotate, 8deg));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cake-field {
+        display: none;
+    }
+}

@@ -3,8 +3,6 @@ window.addEventListener('load', () => {
     const intro = document.getElementById('introScreen');
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
-    const birthdayMsg = document.getElementById('birthdayMessage');
-    const wrapper = document.querySelector('.progress-wrapper');
 
     let progress = 0;
     
@@ -15,22 +13,10 @@ window.addEventListener('load', () => {
             clearInterval(interval);
             
             setTimeout(() => {
-                // 1. 隐藏进度条
-                wrapper.style.display = 'none'; 
-                
-                // 2. 🚀 礼花同步爆发！
-                fireConfetti(); 
-                
-                // 3. 生日文字伴随淡入
-                birthdayMsg.style.display = 'block'; 
-                void birthdayMsg.offsetWidth; 
-                birthdayMsg.classList.add('show');
-
-                // 4. 欣赏 2.5 秒后，彻底隐藏加载屏
-                setTimeout(() => {
-                    intro.classList.add('hidden');
-                }, 2500);
-
+                // 读条完成直接显示封面，烟花与封面入场同步。
+                intro.classList.add('hidden');
+                document.getElementById('cover').classList.add('is-ready');
+                fireConfetti();
             }, 300); 
         }
         
