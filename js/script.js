@@ -120,30 +120,25 @@ window.addEventListener('touchmove', (e) => {
     }
 }, { passive: false });
 
-// ================== 4. 稳定照片列与时间轴渐显 ==================
-// 不使用 CSS multi-column 分片：旋转卡片在部分移动浏览器中会重绘丢失。
-const photoContainer = document.querySelector('.photo-container');
-const photoItems = photoContainer ? Array.from(photoContainer.querySelectorAll('.photo-item')) : [];
-let galleryColumnCount = 0;
-function layoutPhotoColumns() {
-    if (!photoContainer) return;
-    const count = window.matchMedia('(max-width: 767px)').matches ? 2
-        : window.matchMedia('(max-width: 980px)').matches ? 3 : 4;
-    if (count === galleryColumnCount) return;
-    galleryColumnCount = count;
-    const columns = Array.from({ length: count }, () => {
-        const column = document.createElement('div');
-        column.className = 'photo-column';
-        return column;
+// ================== 4. 原版照片墙入场与时间轴渐显 ==================
+// 外壳保持原版多栏顺序；只给内层卡片添加一次短时动画，不持久隐藏照片。
+const photoObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const card = entry.target.querySelector('.photo-card');
+        if (card) {
+            card.classList.add('is-entering');
+            const finish = () => card.classList.remove('is-entering');
+            card.addEventListener('animationend', finish, { once: true });
+            entry.target.addEventListener('pointerenter', finish, { once: true });
+            entry.target.addEventListener('pointerdown', finish, { once: true });
+            setTimeout(finish, 900);
+        }
+        photoObserver.unobserve(entry.target);
     });
-    photoItems.forEach((item, index) => columns[index % count].appendChild(item));
-    photoContainer.replaceChildren(...columns);
-}
-layoutPhotoColumns();
-window.matchMedia('(max-width: 767px)').addEventListener('change', layoutPhotoColumns);
-window.matchMedia('(max-width: 980px)').addEventListener('change', layoutPhotoColumns);
+}, { threshold: 0, rootMargin: '0px 0px 80px 0px' });
+document.querySelectorAll('.photo-item').forEach(el => photoObserver.observe(el));
 
-// 照片始终可见；滚动动画只作用于文字，不再依赖观察器显示照片。
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -157,7 +152,6 @@ document.querySelectorAll('.timeline-item, .reveal').forEach(el => observer.obse
 // ================== 5. 照片弹窗 ==================
 const photoModal = document.getElementById('photoModal');
 const modalImg = document.getElementById('modalImg');
-const photoCloseButton = document.getElementById('photoModalClose');
 let modalScrollY = 0;
 let modalCloseTimer;
 let modalRequest = 0;
@@ -186,7 +180,7 @@ document.querySelectorAll('.photo-zoom').forEach(button => {
         document.body.classList.add('modal-open');
         photoModal.classList.add('active');
         photoModal.setAttribute('aria-hidden', 'false');
-        photoCloseButton.focus({ preventScroll: true });
+        photoModal.focus({ preventScroll: true });
     });
 });
 
@@ -206,7 +200,6 @@ function closePhotoModal() {
 }
 const bg = document.querySelector('.photo-modal-bg');
 if (bg) bg.addEventListener('click', closePhotoModal);
-if (photoCloseButton) photoCloseButton.addEventListener('click', closePhotoModal);
 document.addEventListener('keydown', event => {
     if (event.key === 'Escape') closePhotoModal();
 });
