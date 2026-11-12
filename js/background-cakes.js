@@ -6,9 +6,9 @@
     var CAKE_FIELD_CLASS = 'cake-field';
     var CAKE_CLASS = 'background-cake';
     var CAKES = ['🎂', '🍰'];
-    var MAX_CAKES = 3;
-    var MIN_DELAY = 5000;
-    var MAX_DELAY = 9000;
+    var MAX_CAKES = 6;
+    var MIN_DELAY = 2500;
+    var MAX_DELAY = 4500;
     var FALLBACK_BUFFER = 700;
 
     function randomBetween(min, max) {

@@ -107,7 +107,75 @@ window.addEventListener('touchmove', (e) => {
 }, { passive: false });
 
 // ================== 4. 原版照片墙入场与时间轴渐显 ==================
-// 外壳保持原版多栏顺序；只给内层卡片添加一次短时动画，不持久隐藏照片。
+// 保留原多栏顺序，但不让实际照片参与 WebKit 的列分片绘制。
+(function stabilizePhotoColumns() {
+    const container = document.querySelector('.photo-container');
+    if (!container) return;
+    const items = Array.from(container.querySelectorAll('.photo-item'));
+    if (!items.length) return;
+    items.forEach((item, index) => item.style.setProperty('--enter-delay', (index < 4 ? index * 80 : 0) + 'ms'));
+    let lastWidth = 0;
+    let lastCount = 0;
+    let queued = false;
+
+    function layout() {
+        const width = container.getBoundingClientRect().width;
+        const count = parseInt(getComputedStyle(container).getPropertyValue('--photo-columns'), 10) || 4;
+        if (!width || (Math.abs(width - lastWidth) < 1 && count === lastCount)) return;
+
+        // 只测量不可见副本；真实卡片始终在普通块级列里，不使用多栏分片。
+        const measure = container.cloneNode(false);
+        measure.classList.remove('photo-container--stable');
+        measure.classList.add('photo-measure');
+        measure.style.width = width + 'px';
+        measure.setAttribute('aria-hidden', 'true');
+        measure.inert = true;
+        const copies = items.map(item => {
+            const copy = item.cloneNode(true);
+            copy.querySelectorAll('.is-entering').forEach(el => el.classList.remove('is-entering'));
+            copy.querySelectorAll('video').forEach(video => {
+                video.removeAttribute('src');
+                video.querySelectorAll('source').forEach(source => source.remove());
+            });
+            measure.append(copy, document.createTextNode('\n'));
+            return copy;
+        });
+        container.parentElement.appendChild(measure);
+        const lefts = copies.map(copy => Math.round(copy.getBoundingClientRect().left));
+        const columnLefts = Array.from(new Set(lefts)).sort((a, b) => a - b);
+        const columns = Array.from({ length: count }, () => {
+            const column = document.createElement('div');
+            column.className = 'photo-column';
+            return column;
+        });
+        const focused = document.activeElement;
+        items.forEach((item, index) => {
+            const column = Math.min(count - 1, columnLefts.indexOf(lefts[index]));
+            columns[column].append(item, document.createTextNode('\n'));
+        });
+        container.replaceChildren(...columns);
+        container.classList.add('photo-container--stable');
+        measure.remove();
+        lastWidth = width;
+        lastCount = count;
+        if (container.contains(focused)) focused.focus({ preventScroll: true });
+    }
+
+    function scheduleLayout() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+            queued = false;
+            layout();
+        });
+    }
+
+    layout();
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(scheduleLayout).observe(container);
+    window.addEventListener('resize', scheduleLayout, { passive: true });
+}());
+
+// 只给内层卡片添加一次短时动画，不持久隐藏照片。
 const photoObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if (!entry.isIntersecting) return;

@@ -165,21 +165,24 @@ body.modal-open { position: fixed; top: var(--modal-scroll-top, 0px); left: 0; w
 }
 .photo-wall-section h2 { text-align: center; margin-bottom: 50px; color: #333; font-size: 2rem; position: relative; padding-bottom: 18px; font-family: 'Noto Serif SC', serif; }
 .photo-wall-section h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, #6aa5e3, #4a8cdb, #8ec5fc, #6aa5e3); background-size: 300% auto; animation: shine 4s linear infinite; }
-/* 外壳只参与原版多栏排版，变换放在内层，避免列分片随交互重绘丢失。 */
-.photo-container { max-width: 1080px; margin: 0 auto; column-count: 4; column-gap: 18px; padding: 10px; position: relative; z-index: 1; }
+/* 多栏只用于不可见的顺序测量；实际卡片在独立列里，绘制位置与点击区域保持一致。 */
+.photo-container { --photo-columns: 4; max-width: 1080px; margin: 0 auto; column-count: 4; column-gap: 18px; padding: 10px; position: relative; z-index: 1; }
+.photo-container.photo-container--stable { display: grid; grid-template-columns: repeat(var(--photo-columns), minmax(0, 1fr)); column-count: auto; align-items: start; }
+.photo-column { min-width: 0; }
+.photo-container.photo-measure { position: absolute; top: 0; left: 0; margin: 0; visibility: hidden; pointer-events: none; }
+.photo-measure .photo-card { animation: none !important; transform: none !important; }
 .photo-item { break-inside: avoid; -webkit-column-break-inside: avoid; display: inline-block; vertical-align: top; width: 100%; margin: 0 0 -8px; position: relative; z-index: 5; cursor: zoom-in; }
-/* 各动画状态保留同一合成层，避免 WebKit 丢失跨列卡片的绘制结果。 */
-.photo-card { display: block; width: 100%; padding: 10px; background: #fff; box-shadow: 0 8px 22px rgba(0,0,0,0.13); border-radius: 12px; opacity: 1; -webkit-backface-visibility: hidden; backface-visibility: hidden; transform: translate3d(0, 0, 0) rotate(var(--r)) translate(var(--x), var(--y)); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; }
+.photo-card { display: block; width: 100%; padding: 10px; background: #fff; box-shadow: 0 8px 22px rgba(0,0,0,0.13); border-radius: 12px; opacity: 1; transform: rotate(var(--r)) translate(var(--x), var(--y)); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; }
 .photo-item:nth-child(2) { --enter-delay: 0.08s; }
 .photo-item:nth-child(3) { --enter-delay: 0.16s; }
 .photo-item:nth-child(4) { --enter-delay: 0.24s; }
 .photo-card.is-entering { animation: photoCardEnter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) var(--enter-delay, 0s) backwards; }
 @keyframes photoCardEnter {
-    from { opacity: 0; transform: translate3d(0, 0, 0) scale(0.82) translateY(35px) rotate(var(--r)); }
-    to { opacity: 1; transform: translate3d(0, 0, 0) rotate(var(--r)) translate(var(--x), var(--y)); }
+    from { opacity: 0; transform: scale(0.82) translateY(35px) rotate(var(--r)); }
+    to { opacity: 1; transform: rotate(var(--r)) translate(var(--x), var(--y)); }
 }
 .photo-item:hover { z-index: 20; }
-.photo-item:hover .photo-card { transform: translate3d(0, 0, 0) scale(1.06) rotate(0deg) translate(0, 0) !important; box-shadow: 0 16px 34px rgba(74,140,219,0.3); }
+.photo-item:hover .photo-card { transform: scale(1.06) rotate(0deg) translate(0, 0) !important; box-shadow: 0 16px 34px rgba(74,140,219,0.3); }
 .photo-zoom { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
 .photo-zoom:focus-visible { outline: 3px solid #4a8cdb; outline-offset: 4px; border-radius: 6px; }
 .photo-item img { display: block; width: 100%; height: auto; max-height: 360px; object-fit: contain; border-radius: 6px; background: #f8f8f8; -webkit-user-drag: none; user-select: none; }
@@ -337,13 +340,13 @@ body.modal-open { position: fixed; top: var(--modal-scroll-top, 0px); left: 0; w
     .timeline-item, .timeline-item-left, .timeline-item-right { display: block; width: 100%; padding: 0; margin: 0 0 18px; }
     .timeline-item::before, .timeline-item-left::before, .timeline-item-right::before { left: -34px; right: auto; top: 18px; }
     .timeline-content { padding: 16px; }
-    .photo-container { column-count: 2; column-gap: 12px; padding: 6px; }
+    .photo-container { --photo-columns: 2; column-count: 2; column-gap: 12px; padding: 6px; }
     .photo-item { margin-bottom: -6px; }
     .photo-card { padding: 8px; }
     .photo-item img, .photo-item-video video { max-height: 320px; }
 }
 @media (min-width: 768px) and (max-width: 980px) {
-    .photo-container { column-count: 3; }
+    .photo-container { --photo-columns: 3; column-count: 3; }
 }
 @media (max-width: 360px) {
     .photo-container { column-gap: 8px; }
